@@ -65,25 +65,25 @@ export default function Home({ initialPosts, totalPages }) {
    // console.log('Has more:', hasMore);
     console.log('Posts:', posts);
     return (
-        <main>
-            <h1>Popular Projects</h1>
-            <div>
+        <main className="max-w-4xl mx-auto p-6">
+            <h1 className="text-3xl font-bold mb-6">Popular Projects list</h1>
+            <div className="space-y-6">
                 {posts.map(post => (
-                    <div key={post.id}>
-                        {post.thumbnail && <img width={150} height={100} src={post.thumbnail} alt={post.title} />}
-                        <h3>{post.title}</h3>
-                        <strong>{post.date}</strong>
-                        <p>{post.excerpt}</p>
+                    <div className="border-b pb-4" key={post.id}>
+                        {post.thumbnail && <img className="w-[150px] h-[100px] object-cover rounded-md mb-2" width={150} height={100} src={post.thumbnail} alt={post.title} />}
+                        <h3 className="text-xl font-semibold mb-1">{post.title}</h3>
+                        <strong className="text-gray-500 block mb-2">{post.date}</strong>
+                        <p className="text-gray-700">{post.excerpt}</p>
                         <hr/>
                     </div>
                 ))}
             </div>
             {hasMore ? (
-                <button className={"load-more-btn"} onClick={loadMore} disabled={loading}>
+                <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 load-more-btn" onClick={loadMore} disabled={loading}>
                     {loading ? 'Loading...' : 'Load More'}
                 </button>
             ) : (
-                <p>No more posts.</p>
+                <span className="hidden">No more posts.</span>
             )}
         </main>
     );
