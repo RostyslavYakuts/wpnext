@@ -2,6 +2,11 @@
 # https://github.com/github/gitignore/blob/main/WordPress.gitignore
 .idea/
 node_modules/
+.env
+
+nextapp/package-lock.json
+nextapp/.next
+nextapp/.env
 # Core
 #
 # Note: if you want to stage/commit WP core files
@@ -10,6 +15,7 @@ node_modules/
 /wp-content/index.php
 /wp-content/languages
 /wp-content/plugins/index.php
+/wp-content/plugins/
 /wp-content/themes/index.php
 /wp-includes/
 /index.php
@@ -17,7 +23,7 @@ node_modules/
 /readme.html
 /wp-*.php
 /xmlrpc.php
-
+wordpress/
 # Configuration
 wp-config.php
 
