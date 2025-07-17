@@ -34,7 +34,7 @@ RUN apt-get install -y msmtp && \
     chmod 600 /etc/msmtprc && \
     ln -s /usr/bin/msmtp /usr/sbin/sendmail
 # Copy Xdebug configuration file
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Set the working directory
 WORKDIR /var/www/html

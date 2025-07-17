@@ -8,19 +8,20 @@ services:
       - "8080:80"  # Expose Nginx on port 8080
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf  # Mount the Nginx configuration
-      - ./wordpress:/var/www/html  # Mount the WordPress core directory
-      - ./wp-content:/var/www/html/wp-content  # Mount the custom wp-content directory
+      - ../wordpress:/var/www/html  # Mount the WordPress core directory
+      - ../wp-content:/var/www/html/wp-content  # Mount the custom wp-content directory
     depends_on:
       - php
 
   php:
     build:
-      context: php
+      context: ../
+      dockerfile: docker/Dockerfile
     container_name: php
     volumes:
-      - ./wordpress:/var/www/html  # Mount the WordPress core directory
-      - ./wp-content:/var/www/html/wp-content  # Mount the custom wp-content directory
-      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini  # Xdebug config
+      - ../wordpress:/var/www/html  # Mount the WordPress core directory
+      - ../wp-content:/var/www/html/wp-content  # Mount the custom wp-content directory
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini  # Xdebug config
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
@@ -72,12 +73,12 @@ services:
 
   nextjs:
     build:
-      context: ./nextapp   # folder with your Next.js app and Dockerfile
+      context: ../nextapp   # folder with your Next.js app and Dockerfile
     container_name: nextjs
     ports:
       - "3000:3000"       # expose Next.js on host port 3000
     volumes:
-      - ./nextapp:/app    # mount Next.js source for hot reload
+      - ../nextapp:/app    # mount Next.js source for hot reload
     depends_on:
       - php
       - db
