@@ -28,11 +28,16 @@ add_action('rest_api_init', function () {
         'callback' => 'get_projects',
     ]);
 });
-function get_projects() {
+
+function get_projects(WP_REST_Request $request): WP_Error|WP_REST_Response|WP_HTTP_Response
+{
+    $page = $request->get_param('page') ?: 1;
+    $per_page = $request->get_param('per_page') ?: 2;
     $args = [
         'post_type'      => 'project',
         'post_status'    => 'publish',
-        'posts_per_page' => 10,
+        'posts_per_page' => $per_page,
+        'paged'          => $page,
         'orderby'        => 'date',
         'order'          => 'DESC',
         'meta_query'     => [
@@ -40,20 +45,28 @@ function get_projects() {
         ],
     ];
 
-    $posts = get_posts($args);
+    $query = new WP_Query($args);
 
     // Format posts for REST
-    $data = [];
-    foreach ($posts as $post) {
-        $data[] = [
-            'id'           => $post->ID,
-            'title'        => get_the_title($post),
-            'excerpt'      => get_the_excerpt($post),
-            'date'         => get_the_date('', $post),
-            'thumbnail'    => get_the_post_thumbnail_url($post, 'full'),
-            'link'         => get_permalink($post),
+    $data = array_map(function($post) {
+        return [
+            'id'        => $post->ID,
+            'title'     => get_the_title($post),
+            'excerpt'   => get_the_excerpt($post),
+            'date'      => get_the_date('', $post),
+            'thumbnail' => get_the_post_thumbnail_url($post, 'full'),
+            'link'      => get_permalink($post),
         ];
-    }
+    }, $query->posts);
 
-    return $data;
+    $response = rest_ensure_response([
+        'posts' => $data,
+        'total_pages' => $query->max_num_pages,
+    ]);
+
+    // Додати заголовки для пагінації
+    $response->header('X-WP-Total', (int) $query->found_posts);
+    $response->header('X-WP-TotalPages', (int) $query->max_num_pages);
+
+    return $response;
 }
