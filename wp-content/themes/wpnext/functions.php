@@ -27,6 +27,13 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_projects',
     ]);
+    register_rest_route('nextapp/v1', '/projects/(?P<id>\d+)', [
+        'methods'  => 'GET',
+        'callback' => 'get_project_by_id',
+        'args'     => [
+            'id' => ['required' => true],
+        ],
+    ]);
 });
 
 function get_projects(WP_REST_Request $request): WP_Error|WP_REST_Response|WP_HTTP_Response
@@ -64,9 +71,28 @@ function get_projects(WP_REST_Request $request): WP_Error|WP_REST_Response|WP_HT
         'total_pages' => $query->max_num_pages,
     ]);
 
-    // Додати заголовки для пагінації
     $response->header('X-WP-Total', (int) $query->found_posts);
     $response->header('X-WP-TotalPages', (int) $query->max_num_pages);
 
     return $response;
+}
+
+function get_project_by_id(WP_REST_Request $request): WP_Error|WP_REST_Response|WP_HTTP_Response
+{
+    $id = (int) $request['id'];
+    $post = get_post($id);
+
+    if (!$post || $post->post_type !== 'project') {
+        return new WP_Error('not_found', 'Project not found', ['status' => 404]);
+    }
+    return rest_ensure_response([
+        'id'        => $post->ID,
+        'title'     => get_the_title($post),
+        'content'   => apply_filters('the_content', $post->post_content),
+        'date'      => get_the_date('', $post),
+        'modified'  => get_the_modified_date('', $post),
+        'thumbnail' => get_the_post_thumbnail_url($post, 'full'),
+        'link'      => get_permalink($post),
+        'author'    => get_the_author_meta('display_name', $post->post_author),
+    ]);
 }

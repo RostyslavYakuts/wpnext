@@ -50,7 +50,7 @@ const page = () => {
 					Contact us today for a free consultation and see how we can help you build a modern, high-performance web presence.
 				</p>
 				<Link
-					href="/contact"
+					href="/contacts"
 					className="inline-block bg-green-600 text-white font-semibold px-8 py-4 rounded-lg shadow hover:bg-green-700 transition"
 					aria-label="Contact us"
 				>

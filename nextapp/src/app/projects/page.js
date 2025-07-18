@@ -1,6 +1,5 @@
-// src/app/projects/page.js
 'use client';
-
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function ProjectsPage() {
@@ -47,13 +46,12 @@ export default function ProjectsPage() {
             <h1 className="text-3xl font-bold mb-6">Popular Projects list</h1>
             <div className="space-y-6">
                 {posts.map(post => (
-                    <div className="border-b pb-4" key={post.id}>
+                    <Link href={`/projects/${post.id}`} className="border-b pb-4 hover:bg-gray-50 p-2 rounded" key={post.id}>
                         {post.thumbnail && <img className="w-[150px] h-[100px] object-cover rounded-md mb-2" src={post.thumbnail} alt={post.title} />}
                         <h3 className="text-xl font-semibold mb-1">{post.title}</h3>
                         <strong className="text-gray-500 block mb-2">{post.date}</strong>
                         <p className="text-gray-700">{post.excerpt}</p>
-                        <hr />
-                    </div>
+                    </Link>
                 ))}
             </div>
             {hasMore ? (
