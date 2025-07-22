@@ -58,7 +58,7 @@ export default function ProjectsPage() {
     };
 
     return (
-        <main className="max-w-6xl mx-auto p-6">
+        <main className="mx-auto">
             <h1 className="text-3xl font-bold mb-6">Our Products</h1>
             <ProductFilter
                 filters={filters}

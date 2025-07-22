@@ -1,5 +1,10 @@
 import Link from 'next/link';
 
+export const metadata = {
+	title: 'Contact Us',
+	description: 'Contact our web studio for coworking with our power development team',
+	keywords: 'contacts, email, phone, webstudio',
+};
 const page = () => {
 	return (
 		<main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100 flex items-center justify-center px-6 py-16">

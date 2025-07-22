@@ -16,7 +16,7 @@ const Navbar = () => {
 	return (
 		<nav className="bg-white shadow-md">
 			<div className="navbar max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-				<Link href="/">
+				<Link href="/nextapp/public">
 					<span className="logo text-2xl font-bold text-blue-600 cursor-pointer">NextWp</span>
 				</Link>
 				<ul className="flex space-x-6">

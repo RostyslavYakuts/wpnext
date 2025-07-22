@@ -2,6 +2,7 @@
 
 namespace WPNEXTApp;
 
+use WPNEXTApp\Api\Assets;
 use WPNEXTApp\Api\Cors;
 use WPNEXTApp\Api\Product;
 use WPNEXTApp\Api\Products;
@@ -21,6 +22,7 @@ class Bootstrap
     protected Products $products;
     protected Product $product;
     protected Cors $cors;
+    protected Assets $assets;
 
     public function __construct()
     {
@@ -32,5 +34,6 @@ class Bootstrap
         $this->products = new Products();
         $this->product = new Product();
         $this->cors = new Cors();
+        $this->assets = new Assets();
     }
 }

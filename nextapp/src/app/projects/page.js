@@ -42,7 +42,7 @@ export default function ProjectsPage() {
     };
 
     return (
-        <main className="max-w-4xl mx-auto p-6">
+        <main className="mx-auto">
             <h1 className="text-3xl font-bold mb-6">Popular Projects list</h1>
             <div className="space-y-6">
                 {posts.map(post => (
