@@ -3,11 +3,19 @@ import WPContentClient from "../../../components/wp/WPContentClient";
 const API_URL = process.env.SERVER_WP_PUBLIC_API_URL;
 const NEXT_API = process.env.NEXT_SERVER_WP_PUBLIC_API_URL;
 
-export const metadata = {
-    title: 'Test Page',
-    description: 'Test Description',
-    keywords: 'webstudio',
-};
+export async function generateMetadata({ params }) {
+    const res = await fetch(`${API_URL}/pages?slug=${params.slug}`);
+    const data = await res.json();
+    const page = data[0];
+
+    if (!page) return notFound();
+
+    return {
+        title: page.title.rendered,
+        description: page.excerpt.rendered,
+        keywords: page.slug,
+    };
+}
 async function fetchAssets(postId) {
     const res = await fetch(`${NEXT_API}/assets/${postId}`,{ next: { revalidate: 60 } });
    // console.log(`Assets fetch status for post ${postId}:`, res.status);

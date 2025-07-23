@@ -4,14 +4,11 @@ import '../../styles/main.scss';
 import Head from "next/head";
 import Script from 'next/script';
 
-export default function RootLayout({ children, metadata, assets}) {
+export default function RootLayout({ children, assets}) {
 	return (
         <html lang="en">
         <body>
         <Head>
-            <title>Next JS ${metadata?.title}</title>
-            <meta keywords={"next.js" + metadata?.keywords}></meta>
-            <meta description={"next.js" + metadata?.description}></meta>
             {assets?.styles.map(style => (
                 <link key={style.handle} rel="stylesheet" href={style.src} />
             ))}
